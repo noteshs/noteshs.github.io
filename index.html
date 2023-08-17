@@ -5,33 +5,58 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Editable Website</title>
 <style>
-  background-color: lightblue;
+  body {
     font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    background-color: #b0e0e6;
     margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
+
   #editor {
     width: 80%;
     height: 300px;
-    background-color: white;
-    border: 1px solid gray;
     padding: 10px;
+    resize: none;
+    background-color: white;
+    border: 1px solid #ccc;
     font-size: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+
   #password {
     margin-top: 10px;
     display: flex;
     align-items: center;
   }
-  #password input[type="password"] {
-    width: 100px;
+
+  #passwordInput {
+    padding: 5px;
+    font-size: 14px;
+    margin-right: 10px;
   }
+
+  button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
   #status {
     margin-left: 10px;
+    font-size: 20px;
+  }
+
+  #message {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #007bff;
   }
 </style>
 </head>
