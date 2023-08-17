@@ -46,17 +46,18 @@
   <button onclick="saveContent()">Save</button>
   <script>
     function checkPassword() {
-      const passwordInput = document.getElementById("passwordInput");
-      const status = document.getElementById("status");
+    const passwordInput = document.getElementById("passwordInput");
+    const status = document.getElementById("status");
+    const editor = document.getElementById("editor");
 
-      if (passwordInput.value === "note") {
+    if (passwordInput.value === "note") {
         status.textContent = "✅";
-        document.getElementById("editor").readOnly = false;
-      } else {
+        editor.readOnly = false;
+    } else {
         status.textContent = "❌";
-        document.getElementById("editor").readOnly = true;
-      }
+        editor.readOnly = true;
     }
+}
 
     function saveContent() {
       const content = document.getElementById("editor").value;
