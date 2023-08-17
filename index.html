@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Editable Website</title>
 <style>
-  body {
-    background-color: lightblue;
+  background-color: lightblue;
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
@@ -37,53 +36,61 @@
 </style>
 </head>
 <body>
-  <textarea id="editor" readonly>This is the content you can view and edit.</textarea>
+  <textarea id="editor">Loading content...</textarea>
   <div id="password">
-    <input type="password" id="passwordInput" placeholder="Password">
+    <input type="password" id="passwordInput" placeholder="Enter password">
     <button onclick="checkPassword()">Confirm</button>
     <span id="status"></span>
   </div>
   <button onclick="saveContent()">Save</button>
+  <div id="message"></div>
   <script>
     function checkPassword() {
-    const passwordInput = document.getElementById("passwordInput");
-    const status = document.getElementById("status");
-    const editor = document.getElementById("editor");
+        const passwordInput = document.getElementById("passwordInput");
+        const status = document.getElementById("status");
+        const editor = document.getElementById("editor");
 
-    if (passwordInput.value === "note") {
-        status.textContent = "✅";
-        editor.readOnly = false;
-    } else {
-        status.textContent = "❌";
-        editor.readOnly = true;
-    }
-}
-
-function saveContent() {
-    const content = document.getElementById("editor").value;
-    const message = document.getElementById("message");
-
-    fetch('https://noteshs.github.io/save.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `content=${encodeURIComponent(content)}`,
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            message.textContent = 'Content saved successfully.';
-            // 更新保存后的内容到<textarea>
-            document.getElementById("editor").value = content;
+        if (passwordInput.value === "note") {
+            status.textContent = "✅";
+            editor.readOnly = false;
         } else {
-            message.textContent = 'Failed to save content.';
+            status.textContent = "❌";
+            editor.readOnly = true;
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
+    }
+
+    function saveContent() {
+        const content = document.getElementById("editor").value;
+        const message = document.getElementById("message");
+
+        fetch('save.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `content=${encodeURIComponent(content)}`,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                message.textContent = 'Content saved successfully.';
+            } else {
+                message.textContent = 'Failed to save content.';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    fetch('content.txt')
+        .then(response => response.text())
+        .then(content => {
+            document.getElementById("editor").value = content;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
   </script>
 </body>
 </html>
