@@ -37,13 +37,13 @@
 </style>
 </head>
 <body>
-  <textarea id="editor" readonly>This is the content you can view and edit.</textarea>
+  <textarea id="editor">This is the content you can view and edit.</textarea>
   <div id="password">
     <input type="password" id="passwordInput" placeholder="Password">
     <button onclick="checkPassword()">Confirm</button>
     <span id="status"></span>
   </div>
-
+  <button onclick="saveContent()">Save</button>
   <script>
     function checkPassword() {
       const passwordInput = document.getElementById("passwordInput");
@@ -57,28 +57,29 @@
         document.getElementById("editor").readOnly = true;
       }
     }
-    function saveContent() {
-    const content = document.getElementById("editor").value;
 
-    fetch('https://github.com/noteshs/noteweb-/save.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `content=${encodeURIComponent(content)}`,
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Content saved successfully.');
-        } else {
-            alert('Failed to save content.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
+    function saveContent() {
+      const content = document.getElementById("editor").value;
+
+      fetch('https://noteshs.github.io/save.php', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `content=${encodeURIComponent(content)}`,
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              alert('Content saved successfully.');
+          } else {
+              alert('Failed to save content.');
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+    }
   </script>
 </body>
 </html>
