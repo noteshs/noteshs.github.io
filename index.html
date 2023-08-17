@@ -6,17 +6,32 @@
     background-color: lightblue;
     color: black;
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10%;
   }
   .category {
     font-weight: bold;
     font-size: 18px;
+    margin-top: 20px;
+  }
+  .site-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 10px;
   }
   .site-box {
     border-radius: 10px;
     background-color: white;
+    width: calc(25% - 20px); /* 25% width with 20px gap between items */
     padding: 10px;
-    margin-bottom: 20px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    word-wrap: break-word;
   }
   .site-name {
     font-weight: bold;
@@ -29,46 +44,57 @@
 </head>
 <body>
 
-<div class="category">校园生活</div>
-<div class="site-box">
-  <div class="site-name">上海中学</div>
-  <div class="site-link"><a href="https://www.shs.cn">https://www.shs.cn</a></div>
-</div>
-<div class="site-box">
-  <div class="site-name">智慧上中</div>
-  <div class="site-link"><a href="https://one.shs.cn/tp_nup">https://one.shs.cn/tp_nup</a></div>
-</div>
-<div class="site-box">
-  <div class="site-name">空中课堂</div>
-  <div class="site-link"><a href="https://basic.sh.smartedu.cn/airclassroom/">https://basic.sh.smartedu.cn/airclassroom/</a></div>
+<div class="container">
+  <div class="category">校园生活</div>
+  <div class="category">搜索引擎</div>
+  <div class="category">实用工具</div>
 </div>
 
-<div class="category">搜索引擎</div>
-<div class="site-box">
-  <div class="site-name">必应</div>
-  <div class="site-link"><a href="https://cn.bing.com/">https://cn.bing.com/</a></div>
-</div>
-<div class="site-box">
-  <div class="site-name">百度</div>
-  <div class="site-link"><a href="https://www.baidu.com">https://www.baidu.com</a></div>
-</div>
-<div class="site-box">
-  <div class="site-name">谷歌</div>
-  <div class="site-link"><a href="https://www.google.com">https://www.google.com</a></div>
-</div>
+<div class="container">
+  <div class="site-grid">
+    <div class="site-box">
+      <div class="site-name">上海中学</div>
+      <div class="site-link"><a href="https://www.shs.cn">https://www.shs.cn</a></div>
+    </div>
+    <div class="site-box">
+      <div class="site-name">智慧上中</div>
+      <div class="site-link"><a href="https://one.shs.cn/tp_nup">https://one.shs.cn/tp_nup</a></div>
+    </div>
+    <div class="site-box">
+      <div class="site-name">空中课堂</div>
+      <div class="site-link"><a href="https://basic.sh.smartedu.cn/airclassroom/">https://basic.sh.smartedu.cn/airclassroom/</a></div>
+    </div>
+  </div>
 
-<div class="category">实用工具</div>
-<div class="site-box">
-  <div class="site-name">大屏时钟</div>
-  <div class="site-link"><a href="https://time.is/clock">https://time.is/clock</a></div>
-</div>
-<div class="site-box">
-  <div class="site-name">同网速传</div>
-  <div class="site-link"><a href="https://snapdrop.net/#">https://snapdrop.net/#</a></div>
-</div>
-<div class="site-box">
-  <div class="site-name">线上笔记</div>
-  <div class="site-link"><a href="https://note.ms">https://note.ms</a></div>
+  <div class="site-grid">
+    <div class="site-box">
+      <div class="site-name">必应</div>
+      <div class="site-link"><a href="https://cn.bing.com/">https://cn.bing.com/</a></div>
+    </div>
+    <div class="site-box">
+      <div class="site-name">百度</div>
+      <div class="site-link"><a href="https://www.baidu.com">https://www.baidu.com</a></div>
+    </div>
+    <div class="site-box">
+      <div class="site-name">谷歌</div>
+      <div class="site-link"><a href="https://www.google.com">https://www.google.com</a></div>
+    </div>
+  </div>
+
+  <div class="site-grid">
+    <div class="site-box">
+      <div class="site-name">大屏时钟</div>
+      <div class="site-link"><a href="https://time.is/clock">https://time.is/clock</a></div>
+    </div>
+    <div class="site-box">
+      <div class="site-name">同网速传</div>
+      <div class="site-link"><a href="https://snapdrop.net/#">https://snapdrop.net/#</a></div>
+    </div>
+    <div class="site-box">
+      <div class="site-name">线上笔记</div>
+      <div class="site-link"><a href="https://note.ms">https://note.ms</a></div>
+    </div>
+  </div>
 </div>
 
 </body>
