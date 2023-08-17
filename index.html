@@ -1,77 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>文本编辑网站</title>
-  <style>
-    body {
-      background-color: lightblue;
-    }
-    .container {
-      text-align: center;
-      margin-top: 50px;
-    }
-    #editor {
-      width: 80%;
-      height: 300px;
-      background-color: white;
-      border: 1px solid black;
-      margin: 0 auto;
-      padding: 10px;
-      resize: none;
-    }
-    #password {
-      margin-top: 20px;
-      width: 100px;
-    }
-    #status {
-      margin-top: 10px;
-    }
-    #saveButton {
-      margin-top: 20px;
-    }
-  </style>
+<style>
+  body {
+    background-color: lightblue;
+    color: black;
+    font-family: Arial, sans-serif;
+  }
+  .category {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .site-box {
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  }
+  .site-name {
+    font-weight: bold;
+  }
+  .site-link {
+    color: darkblue;
+    text-decoration: underline;
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <textarea id="editor"></textarea>
-    <br>
-    <input type="password" id="password" placeholder="输入密码">
-    <button id="checkPassword">确认</button>
-    <div id="status"></div>
-    <button id="saveButton" disabled>保存</button>
-  </div>
 
-  <script>
-    const editor = document.getElementById("editor");
-    const passwordInput = document.getElementById("password");
-    const checkPasswordButton = document.getElementById("checkPassword");
-    const statusDiv = document.getElementById("status");
-    const saveButton = document.getElementById("saveButton");
+<div class="category">校园生活</div>
+<div class="site-box">
+  <div class="site-name">上海中学</div>
+  <div class="site-link"><a href="https://www.shs.cn">https://www.shs.cn</a></div>
+</div>
+<div class="site-box">
+  <div class="site-name">智慧上中</div>
+  <div class="site-link"><a href="https://one.shs.cn/tp_nup">https://one.shs.cn/tp_nup</a></div>
+</div>
+<div class="site-box">
+  <div class="site-name">空中课堂</div>
+  <div class="site-link"><a href="https://basic.sh.smartedu.cn/airclassroom/">https://basic.sh.smartedu.cn/airclassroom/</a></div>
+</div>
 
-    // Fetch and display content.txt on page load
-    fetch('content.txt')
-      .then(response => response.text())
-      .then(content => {
-        editor.value = content;
-      });
+<div class="category">搜索引擎</div>
+<div class="site-box">
+  <div class="site-name">必应</div>
+  <div class="site-link"><a href="https://cn.bing.com/">https://cn.bing.com/</a></div>
+</div>
+<div class="site-box">
+  <div class="site-name">百度</div>
+  <div class="site-link"><a href="https://www.baidu.com">https://www.baidu.com</a></div>
+</div>
+<div class="site-box">
+  <div class="site-name">谷歌</div>
+  <div class="site-link"><a href="https://www.google.com">https://www.google.com</a></div>
+</div>
 
-    checkPasswordButton.addEventListener("click", function() {
-      const password = passwordInput.value.trim();
-      if (password === "note") {
-        statusDiv.innerHTML = "✅ 密码正确";
-        editor.readOnly = false;
-        saveButton.disabled = false;
-      } else {
-        statusDiv.innerHTML = "❌ 密码错误";
-        editor.readOnly = true;
-        saveButton.disabled = true;
-      }
-    });
+<div class="category">实用工具</div>
+<div class="site-box">
+  <div class="site-name">大屏时钟</div>
+  <div class="site-link"><a href="https://time.is/clock">https://time.is/clock</a></div>
+</div>
+<div class="site-box">
+  <div class="site-name">同网速传</div>
+  <div class="site-link"><a href="https://snapdrop.net/#">https://snapdrop.net/#</a></div>
+</div>
+<div class="site-box">
+  <div class="site-name">线上笔记</div>
+  <div class="site-link"><a href="https://note.ms">https://note.ms</a></div>
+</div>
 
-    saveButton.addEventListener("click", function() {
-      const content = editor.value;
-      // ... (remaining save logic remains the same)
-    });
-  </script>
 </body>
 </html>
