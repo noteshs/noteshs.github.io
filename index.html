@@ -59,28 +59,31 @@
     }
 }
 
-    function saveContent() {
-      const content = document.getElementById("editor").value;
+function saveContent() {
+    const content = document.getElementById("editor").value;
+    const message = document.getElementById("message");
 
-      fetch('https://noteshs.github.io/save.php', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: `content=${encodeURIComponent(content)}`,
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.success) {
-              alert('Content saved successfully.');
-          } else {
-              alert('Failed to save content.');
-          }
-      })
-      .catch(error => {
-          console.error('Error:', error);
-      });
-    }
+    fetch('https://noteshs.github.io/save.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `content=${encodeURIComponent(content)}`,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            message.textContent = 'Content saved successfully.';
+            // 更新保存后的内容到<textarea>
+            document.getElementById("editor").value = content;
+        } else {
+            message.textContent = 'Failed to save content.';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
   </script>
 </body>
 </html>
