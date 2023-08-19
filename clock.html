@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: black;
+  }
+  #clock {
+    font-family: "Segoe UI", sans-serif;
+    font-size: 15vw;
+    color: white;
+    text-align: center;
+    padding: 0;
+    width: 80%;
+    /* border: 1px solid white; */
+    /*box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);*/
+  }
+</style>
+<title>全屏时钟</title>
+</head>
+<body>
+  <div id="clock">
+    00:00:00
+  </div>
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const timeString = `${hours}:${minutes}:${seconds}`;
+      document.getElementById('clock').textContent = timeString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
