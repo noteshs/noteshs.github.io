@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 7% 10% 10% 10%;
+            transition: background-color 0.3s ease;
+            background-color: #ACCCFF;
+            font-family: "San Francisco", 微软雅黑, "Segoe UI", sans-serif;
+        }
+        .scheme-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: visible;
+            position: relative;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 100%;
+            transition: width 0.5s;
+            border-radius: 10px;
+        }
+        .cut-animation {
+            position: absolute;
+            font-weight: bold;
+            animation: floatUp 1s ease-out forwards;
+            pointer-events: none;
+            z-index: 2;
+            top: -25px;
+        }
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-30px); }
+        }
+        button {
+            background-color: darkblue;
+            color: white;
+            padding: 10px 40px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 20px;
+            margin: 20px auto;
+            display: block;
+        }
+        .status-text {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="scheme-container">
+        <!-- 六个方案进度条 -->
+        <div class="scheme" data-color="#39C5BB" data-formula="fixed"></div>
+        <div class="scheme" data-color="#66CCFF" data-formula="geometric"></div>
+        <div class="scheme" data-color="#FFA500" data-formula="linear"></div>
+        <div class="scheme" data-color="#00FFCC" data-formula="quadratic"></div>
+        <div class="scheme" data-color="#0000FF" data-formula="quadratic-n"></div>
+        <div class="scheme" data-color="#EE0000" data-formula="factorial"></div>
+    </div>
+
+    <div class="status-text">接下来进行第 <span id="current-step">1</span> 次剪裁</div>
+    <button onclick="cutAll()">执行剪裁</button>
+
+    <script>
+        let currentStep = 1, n=2;
+        const schemes = Array.from(document.querySelectorAll('.scheme'));
+        
+        // 初始化方案
+        schemes.forEach(scheme => {
+            const color = scheme.dataset.color;
+            scheme.innerHTML = `
+                <div class="progress-container">
+                    <div class="progress-bar" style="background: ${color}; width: 100%"></div>
+                </div>
+                <div style="color: ${color}; margin-top: 10px; font-family: Menlo">
+                    剩余长度：<span class="length">100.00</span> cm
+                </div>
+            `;
+        });
+
+        // 剪裁算法集合（修复公式定义）
+        const formulaFunctions = {
+            // 方案①：第n次剪裁固定减少10cm
+            fixed: (n) => (n >= 1) ? 10 : 0,
+            
+            // 方案②：第n次剪裁减少40/2^(n-2) cm（n≥2）
+            geometric: (n) => (n >= 2) ? 40 / Math.pow(2, n-2) : 0,
+            
+            // 方案③：第n次剪裁减少40/(n-1) cm（n≥2）
+            linear: (n) => (n >= 2) ? 40 / (n-1) : 0,
+            
+            // 方案④：第n次剪裁减少40/(n-1)^2 cm（n≥2）
+            quadratic: (n) => (n >= 2) ? 40 / Math.pow(n-1, 2) : 0,
+            
+            // 方案⑤：第n次剪裁减少40/(n²-n) cm（n≥2）
+            "quadratic-n": (n) => (n >= 2) ? 40 / (n*n - n) : 0,
+            
+            // 方案⑥：第n次剪裁减少40/(n-2)! cm（n≥2）
+            factorial: (n) => {
+                if (n < 2) return 0; // n≥2时才执行剪裁
+                const fact = (k) => k <= 1 ? 1 : k * fact(k-1);
+                return 40 / fact(n-1); // 改为 (n-1)!
+            }
+        };
+
+        function createAnimation(container, amount, color) {
+            const anim = document.createElement('div');
+            anim.className = 'cut-animation';
+            anim.style.color = color;
+            anim.textContent = `-${amount.toFixed(2)}`;
+            container.appendChild(anim);
+            setTimeout(() => anim.remove(), 1000);
+        }
+
+        function cutAll() {
+            schemes.forEach((scheme, index) => {
+                const container = scheme.querySelector('.progress-container');
+                const bar = scheme.querySelector('.progress-bar');
+                const lengthSpan = scheme.querySelector('.length');
+                const formula = scheme.dataset.formula;
+                const color = scheme.dataset.color;
+                
+                let currentLength = parseFloat(lengthSpan.textContent);
+                const n = currentStep+1; // 当前步骤即为公式中的n
+                const cutAmount = formulaFunctions[formula](n);
+
+                // 边界条件处理
+                if (currentLength <= 0 || cutAmount <= 0 || cutAmount > currentLength) {
+                    lengthSpan.textContent = '0.00';
+                    bar.style.width = '0%';
+                    return;
+                }
+
+                // 创建动画并更新进度
+                createAnimation(container, cutAmount, color);
+                currentLength -= cutAmount;
+                bar.style.width = `${(currentLength / 100) * 100}%`;
+                lengthSpan.textContent = currentLength.toFixed(2);
+            });
+
+            // 更新步骤显示（先计算后递增）
+            document.getElementById('current-step').textContent = currentStep+1;
+            currentStep++; // 步骤更新放在最后
+        }
+        let lastColor = "#ACCCFF";
+        function getRandomColor() {
+            const colorPool = ["#ACCCFF","#FFF2E2","#E3EDCD","#F4E0EA","#D6CAFA","#FAE3D8"];
+            let newColor;
+            do { newColor = colorPool[Math.floor(Math.random()*colorPool.length)]; }
+            while (newColor === lastColor);
+            lastColor = newColor;
+            return newColor;
+        }
+        document.querySelector("button").addEventListener("click", () => {
+            document.body.style.backgroundColor = getRandomColor();
+        });
+    </script>
+</body>
+</html>
